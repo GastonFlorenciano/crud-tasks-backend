@@ -56,9 +56,20 @@ ctrl.deleteTask = async (req, res) => {
         })
     }
 }
-// ctrl.postTask = (req, res) => {
+
+ctrl.postTask = async (req, res) => {
     
-// }
+    const connection = await conexionDB();
+
+    const {title, description, isComplete} = req.body;
+
+    const [post] = await connection.query('INSERT INTO `tasks`(`title`, `description`, `isComplete`) VALUES (?, ?, ?)', [title, description, isComplete])
+
+     res.status(200).json({
+            msg: "TAREA CREADA CON ÉXITO"
+        })
+    
+}
 
 // ctrl.putTask = (req, res) => {
     
