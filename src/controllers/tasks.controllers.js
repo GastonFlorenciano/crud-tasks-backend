@@ -6,32 +6,56 @@ ctrl.getTask = async (req, res) => {
     
     const connection = await conexionDB();
 
-    const result = await connection.query('SELECT * FROM `tasks`');
+    const [result] = await connection.query('SELECT * FROM `tasks`');
 
-    res.json(result[0]);
+    if(result.length === 0){
+        
+        return res.status(200).json({
+            msg: "TODAVÍA NO EXISTEN TAREAS"
+        })
+
+    }else{    
+        res.status(200).json(result);
+    }
+
 }
 
 ctrl.getTaskId = async (req, res) => {
 
     const connection = await conexionDB();
     
-    const result = await connection.query('SELECT * FROM `tasks`');
-    
     const id = parseInt(req.params.id);
-     
-    const tasks = result[0];
 
-    const taskId = tasks.find(t => t.id == id)
+    const [result] = await connection.query('SELECT * FROM tasks WHERE id=?', id);
 
-    if(taskId){
-        res.json(taskId)
+    if(result.length > 0){
+        return res.status(200).json(result);
     }else{
-        res.json({msg: "TAREA NO ENCONTRADA"})
-    }
-
-    
+        res.status(404).json({
+            msg: 'LA TAREA NO EXISTE'
+        })
+    }    
 }
 
+ctrl.deleteTask = async (req, res) => {
+
+    const connection = await conexionDB();
+    
+    const id = parseInt(req.params.id);
+
+    const [result] = await connection.query('SELECT * FROM tasks WHERE id=?', id)
+
+    if(result <= 0){
+        return res.status(404).json({
+            msg: 'LA TAREA NO EXISTE'
+        })
+    }else{
+        connection.query('DELETE FROM tasks WHERE id=?', id)
+        res.status(200).json({
+            msg: 'TAREA ELIMINADA CON ÉXITO'
+        })
+    }
+}
 // ctrl.postTask = (req, res) => {
     
 // }
@@ -40,8 +64,5 @@ ctrl.getTaskId = async (req, res) => {
     
 // }
 
-// ctrl.deleteTask = (req, res) => {
-    
-// }
 
 module.exports = ctrl;
