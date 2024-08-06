@@ -63,17 +63,40 @@ ctrl.postTask = async (req, res) => {
 
     const {title, description, isComplete} = req.body;
 
-    const [post] = await connection.query('INSERT INTO `tasks`(`title`, `description`, `isComplete`) VALUES (?, ?, ?)', [title, description, isComplete])
+    await connection.query('INSERT INTO `tasks`(`title`, `description`, `isComplete`) VALUES (?, ?, ?)', [title, description, isComplete])
 
-     res.status(200).json({
+    res.status(200).json({
             msg: "TAREA CREADA CON ÉXITO"
         })
     
 }
 
-// ctrl.putTask = (req, res) => {
+ctrl.putTask = async (req, res) => {
+
+    const connection = await conexionDB();
+
+    const id = parseInt(req.params.id);
+
+    const {title, description, isComplete} = req.body;  
     
-// }
+    const [taskId] = await connection.query('SELECT * FROM tasks WHERE id=?', id);
+
+    if(taskId.length === 0){
+
+        return res.status(404).json({
+            msg: "TAREA NO ENCONTRADA"
+        })
+
+    }else{
+        
+        await connection.query('UPDATE `tasks` SET `title`= (?),`description`= (?),`isComplete`= (?) WHERE id = (?)', [title, description, isComplete, id])
+
+        res.status(200).json({
+            msg: "TAREA EDITADA CON ÉXITO"
+        })
+    }
+
+}
 
 
 module.exports = ctrl;
