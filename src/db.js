@@ -1,10 +1,10 @@
-const mysql = require('mysql2/promise'); // Importa el módulo mysql2/promise para utilizar promesas con MySQL
+import { createConnection } from 'mysql2/promise'; // Importa el módulo mysql2/promise para utilizar promesas con MySQL
 
 // Función asincrónica para establecer la conexión a la base de datos
 const conexionDB = async () => {
     try {
         // Crea una conexión a la base de datos con los parámetros especificados
-        const connection = await mysql.createConnection ({
+        const connection = await createConnection ({
             host: 'localhost', // Host donde se encuentra la base de datos
             port: 3306,         // Puerto en el que escucha MySQL
             database: 'tasks_db', // Nombre de la base de datos
@@ -19,6 +19,4 @@ const conexionDB = async () => {
     }   
 }
 
-module.exports = {
-    conexionDB
-}
+export { conexionDB }

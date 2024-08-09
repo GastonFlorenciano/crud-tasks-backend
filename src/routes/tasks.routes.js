@@ -1,11 +1,13 @@
-const router = require('express').Router();
-const { getTask, getTaskId, deleteTask, postTask, putTask } = require('../controllers/tasks.controllers.js')
+import { Router }  from 'express';
+import { getTask, getTaskId, deleteTask, postTask, putTask } from '../controllers/tasks.controllers.js';
+
+const tasksRouter = Router();
 
 //Creación de las respectivas rutas con sus métodos y sus funciones
-router.get('/tasks', getTask);
-router.get('/task/:id', getTaskId);
-router.delete('/task/:id', deleteTask);
-router.put('/task/:id', putTask);
-router.post('/tasks', postTask);
+tasksRouter.get('/tasks', getTask);
+tasksRouter.get('/task/:id', getTaskId);
+tasksRouter.delete('/task/:id', deleteTask);
+tasksRouter.put('/task/:id', putTask);
+tasksRouter.post('/tasks', postTask);
 
-module.exports = router;
+export { tasksRouter };

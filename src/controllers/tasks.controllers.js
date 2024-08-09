@@ -1,9 +1,8 @@
-const { conexionDB } = require('../db.js');
+import { conexionDB } from '../db.js';
 
-const ctrl = {};
 
 // Función para obtener todas las tareas
-ctrl.getTask = async (req, res) => {
+export const getTask = async (req, res) => {
     
     const connection = await conexionDB();
 
@@ -25,7 +24,7 @@ ctrl.getTask = async (req, res) => {
 }
 
 // Función para obtener una tarea específica por ID
-ctrl.getTaskId = async (req, res) => {
+export const getTaskId = async (req, res) => {
 
     const connection = await conexionDB();
     
@@ -46,7 +45,7 @@ ctrl.getTaskId = async (req, res) => {
 }
 
 // Función para eliminar una tarea por ID
-ctrl.deleteTask = async (req, res) => {
+export const deleteTask = async (req, res) => {
 
     const connection = await conexionDB();
     
@@ -69,7 +68,7 @@ ctrl.deleteTask = async (req, res) => {
 }
 
 // Función para crear una nueva tarea
-ctrl.postTask = async (req, res) => {
+export const postTask = async (req, res) => {
     
     const connection = await conexionDB();
 
@@ -85,7 +84,7 @@ ctrl.postTask = async (req, res) => {
 }
 
 // Función para actualizar una tarea por ID
-ctrl.putTask = async (req, res) => {
+export const putTask = async (req, res) => {
 
     const connection = await conexionDB();
 
@@ -113,6 +112,3 @@ ctrl.putTask = async (req, res) => {
     }
 
 }
-
-
-module.exports = ctrl;
