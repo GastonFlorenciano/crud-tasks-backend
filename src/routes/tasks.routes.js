@@ -3,9 +3,9 @@ const { getTask, getTaskId, deleteTask, postTask, putTask } = require('../contro
 
 //Creación de las respectivas rutas con sus métodos y sus funciones
 router.get('/tasks', getTask);
-router.get('/task/:id', getTaskId);
-router.delete('/task/:id', deleteTask);
-router.put('/task/:id', putTask);
+router.get('/tasks/:id', getTaskId);
+router.delete('/tasks/:id', deleteTask);
+router.put('/tasks/:id', putTask);
 router.post('/tasks', postTask);
 
 module.exports = router;
